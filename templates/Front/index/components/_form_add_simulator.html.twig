@@ -1,0 +1,39 @@
+{{ form_start(form_client, {'method': 'POST'}) }}
+    <div class="row">
+        
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.product) }}
+        </div>
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.datedepot) }}
+        </div>
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.interests) }}
+        </div>
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.amount) }}
+        </div>
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.rate) }}
+        </div>
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            {{ form_row(form_client.datefin) }}
+        </div>
+        
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+           
+            <button type="submit" class="btn btn-primary btn-block">Simuler</button>
+            
+        </div>
+
+        <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+            <button type="reset" class="btn btn-danger btn-block">Annuler</button>
+        </div>
+
+    </div>
+
+{{ form_end(form_client) }}

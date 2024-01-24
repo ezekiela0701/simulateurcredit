@@ -1,0 +1,15 @@
+{% set status = status %}
+
+{# {% if (status == 1 ) %}
+	<span class="filloption bg-primary"></span>
+	Activé
+
+{% else %}
+	<span class="nav-icon fas fa-circle text-danger"></span>
+	Désactivé
+{% endif %} #}
+{% if (status == 1 ) %}
+	<span class="bullet bullet-sm bullet-success"></span>Activé
+{% else %}
+	<span class="bullet bullet-sm bullet-danger"></span>Désactivé
+{% endif %}

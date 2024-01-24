@@ -35,6 +35,12 @@
         <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/css/pages/dashboard-ecommerce.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/css/plugins/charts/chart-apex.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/css/plugins/forms/pickers/form-flat-pickr.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('Assets/app-assets/css/plugins/forms/pickers/form-pickadate.css')}}">
+
         <!-- END: Page CSS-->
 
         <!-- BEGIN: Custom CSS-->
@@ -58,7 +64,8 @@
     {{ include('Front/components/menu.html.twig') }}
     <!-- BEGIN: Content-->
     <div class="app-content content ">
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
         {# <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
@@ -812,11 +819,19 @@
     <script src="{{asset('Assets/app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
     <script src="{{asset('Assets/app-assets/vendors/js/charts/apexcharts.min.js')}}"></script>
     <script src="{{asset('Assets/app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
+    
+    <script src="{{asset('Assets/app-assets/vendors/js/pickers/pickadate/picker.js')}}"></script>
+    <script src="{{asset('Assets/app-assets/vendors/js/pickers/pickadate/picker.date.js')}}"></script>
+    <script src="{{asset('Assets/app-assets/vendors/js/pickers/pickadate/picker.time.js')}}"></script>
+    <script src="{{asset('Assets/app-assets/vendors/js/pickers/pickadate/legacy.js')}}"></script>
+    <script src="{{asset('Assets/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
     <script src="{{asset('Assets/app-assets/js/core/app-menu.js')}}"></script>
     <script src="{{asset('Assets/app-assets/js/core/app.js')}}"></script>
+
+    <script src="{{asset('Assets/app-assets/js/scripts/forms/pickers/form-pickers.js')}}"></script>
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
@@ -833,6 +848,11 @@
             }
         })
     </script>
+
+    	{% block javascripts %}
+			{# {{ encore_entry_script_tags('app') }} #}
+		{% endblock %}
+        
 </body>
 <!-- END: Body-->
 

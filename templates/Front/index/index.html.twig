@@ -8,13 +8,99 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="example-wrapper">
+        <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                
+                <div class="content-body">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/Projet/Simulateur pret/simulateurcredit/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/Projet/Simulateur pret/simulateurcredit/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
-    </ul>
-</div>
+                    {{ include('Front/index/components/_form_add_simulator.html.twig') }}
+
+                    {% if datas != null and simulates != null %}
+                    
+                        <section id="complex-header-datatable">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header border-bottom">
+                                            <h4 class="card-title">Simulation produit {{datas.product}}</h4>
+                                        </div>
+                                        <div class="card-datatable">
+                                            <table id="listChange" class=" table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date debut</th>
+                                                        <th>Date fin</th>
+                                                        <th>Montant</th>
+                                                        <th>Taux</th>
+                                                        <th>Interet</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% if datas.product =="DAT" %}
+                                                        
+                                                        <tr>
+
+                                                                <td>{{datas.datedepot|date('d/M/Y')}}</td>
+                                                                <td>{{datas.datefin|date('d/M/Y')}}</td>
+                                                                <td>{{datas.amount}}</td>
+                                                                <td>{{datas.rate}} %</td>
+                                                                <td>{{simulates.interest|number_format(2, '.', ' ')}}</td>
+                                                                <td>{{ simulates.totality|number_format(2, '.', ' ') }}</td>
+                                                                
+                                                        </tr>
+                                                    {% endif %}
+                                                    {# {% for list in lists %}
+                                                        <tr>
+                                                                <td>{{list.id}}</td>
+                                                                <td>{{list.name}}</td>
+                                                                <td>{{list.code}}</td>
+                                                                <td>{{ include('admin/components/block/status.html.twig', { 'status': list.status}) }}</td>
+                                                                <td>
+                                                                    <a href="{{ path('admin.location.edit', {'id': list.id}) }}" data-toggle="tooltip" data-placement="top" title="Modifier" class="btn btn-icon btn-icon rounded-circle btn-success">
+                                                                        <i data-feather="edit"></i>
+                                                                    </a>
+                                                                </td>
+                                                        </tr>
+                                                    {% endfor %} #}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    {% endif %}
+
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+  
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ include('Front/components/block/blockjs.datatable.html.twig', { 'table_id': 'listChange', 'targets': 6 }) }}
+
+    <script>
+        $(document).ready(function() {
+        var table = $('#listChange').DataTable({
+            // Vos options DataTables et colonnes spécifiées ici
+        });
+
+        // Réinitialiser les icônes Data Feather après chaque pagination
+        table.on('draw.dt', function() {
+            feather.replace();
+    });
+    });
+    </script>
+
 {% endblock %}
