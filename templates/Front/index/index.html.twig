@@ -26,7 +26,7 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header border-bottom">
-                                            <h4 class="card-title">Simulation produit {{datas.product}}</h4>
+                                            <h4 class="card-title">Simulation produit {{datas.product}} {{simulates.interest.nbMonth}} mois</h4>
                                         </div>
                                         <div class="card-datatable">
                                             <table id="listChange" class=" table table-bordered">
@@ -47,9 +47,9 @@
 
                                                                 <td>{{datas.datedepot|date('d/M/Y')}}</td>
                                                                 <td>{{datas.datefin|date('d/M/Y')}}</td>
-                                                                <td>{{datas.amount}}</td>
+                                                                <td>{{datas.amount|number_format(2, '.', ' ')}}</td>
                                                                 <td>{{datas.rate}} %</td>
-                                                                <td>{{simulates.interest|number_format(2, '.', ' ')}}</td>
+                                                                <td>{{simulates.interest.amount|number_format(2, '.', ' ')}}</td>
                                                                 <td>{{ simulates.totality|number_format(2, '.', ' ') }}</td>
                                                                 
                                                         </tr>

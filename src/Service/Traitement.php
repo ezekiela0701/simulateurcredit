@@ -23,7 +23,7 @@ Class Traitement
 
                 $amount["interest"] = $this->TraitementDat($datas) ;
 
-                $amount["totality"]    = $amount["interest"] + $datas["amount"] ;
+                $amount["totality"]    = $amount["interest"]['amount'] + $datas["amount"] ;
 
                 return $amount ;
 
@@ -45,13 +45,15 @@ Class Traitement
     }
 
     function TraitementDat($datas) {
-        
-        $datas["nbMonth"] = $this->traitementDate->nbMonthBetweenTwoDate($datas["datedepot"] , $datas["datefin"]) ;
+        $values = [] ;
+
+        $datas["nbMonth"]   = $this->traitementDate->nbMonthBetweenTwoDate($datas["datedepot"] , $datas["datefin"]) ;
         
         // $amount = (\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($diffDate)) / 360 ;
-        $amount = $this->traitementBanking->calcInterestDat($datas) ;
+        $values['nbMonth']  = $datas["nbMonth"] ;
+        $values['amount']   = $this->traitementBanking->calcInterestDat($datas) ;
 
-        return $amount ;
+        return $values ;
 
     }
 
