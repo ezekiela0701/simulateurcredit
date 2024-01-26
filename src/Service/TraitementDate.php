@@ -50,9 +50,15 @@ Class TraitementDate
             
             if ($date1->format('j') > 1) {
                 // Si la date de début n'est pas le premier jour du mois, ajuster le nombre de jours
-                $nombreJours -= $date1->format('j') - 1;
+                // $nombreJours -= $date1->format('j') - 1;
+                $nombreJours -= $date1->format('j');
             }
-            
+
+            if ($date1->format('m') == $date2->format('m')) {
+                // Si le mois de début est le même que le mois de fin, ajuster le nombre de jours
+                $nombreJours -= cal_days_in_month(CAL_GREGORIAN, $date2->format('m'), $date2->format('Y')) - $date2->format('j');
+            }
+
             $array[$i]['nombreJours']      = $nombreJours ;
 
             $date1->modify('first day of next month');

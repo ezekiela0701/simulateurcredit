@@ -13,6 +13,7 @@ Class Traitement
         $this->traitementBanking    = $traitementBanking;
 
     }
+
     function TraitementSimulator($datas)  {
         
         switch ($datas['product']) {
@@ -86,10 +87,42 @@ Class Traitement
     }
 
     function TraitementEprMonth($datas , $listMonthYears) {
-        
-        // dd($datas , $listMonthYears) ;
+        $values[]            = [] ;
+        $amountYears         = 0 ;
+        $amountInterestYears = 0 ;
+        $firstAmount         = $datas["amount"] ;
 
-        return null ; 
+        $diffDate = $this->traitementDate->DayTwoDate($datas["datedepot"] , $datas["datefin"]) ;
+
+        for ($i=0; $i < \count($listMonthYears); $i++) { 
+
+            $monthYears = $listMonthYears[$i]['listMonthYears'] ;
+
+            $datas["nbDay"]         = $listMonthYears[$i]["nombreJours"] ; ;
+
+            $values[$i]["amount"]    = $this->traitementBanking->calcInterestEpr($datas) ;
+
+            /** listes des moi et nombre de jours dans chaque mois*/
+            $values[$i]["date"]      = $monthYears ;
+            $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
+
+            $values[$i]["capital"]   = $values[$i]["amount"] + $datas["amount"] ; 
+
+            $datas["amount"]         = $values[$i]["capital"] ;
+            
+            //capital annuel
+            // $amountYears += $values[$i]["capital"] ;
+             //interet annuel 
+            $amountInterestYears += $values[$i]["amount"] ;
+
+        }
+
+        $values[0]['diffDate']              = $diffDate ;
+        $values[0]['capitalYears']          = $firstAmount + $amountInterestYears ; // capital + interet annuel
+        $values[0]['amountInterestYears']   = $amountInterestYears ;
+
+        return $values ; 
+
     }
 
     function TraitementEprYears($datas , $listMonthYears) {
@@ -103,9 +136,11 @@ Class Traitement
         for ($i=0; $i < \count($listMonthYears); $i++) { 
             # code...
 
-            $monthYears = $listMonthYears[$i]['listMonthYears'] ;
+            $monthYears         = $listMonthYears[$i]['listMonthYears'] ;
+            $datas['nbDay']     = $listMonthYears[$i]["nombreJours"] ;
 
-            $values[$i]["amount"]    = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($listMonthYears[$i]["nombreJours"]) )/360 , 2) ;
+            // $values[$i]["amount"]    = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($listMonthYears[$i]["nombreJours"]) )/360 , 2) ;
+            $values[$i]["amount"]    = $this->traitementBanking->calcInterestEpr($datas) ;
             $values[$i]["date"]      = $monthYears ;
             $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
             
@@ -118,7 +153,7 @@ Class Traitement
         $values[0]['capital']     = $amountYears + $datas['amount'] ;
 
         return $values ; 
-        
+
     }
 
 }

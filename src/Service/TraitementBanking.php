@@ -8,10 +8,11 @@ Class TraitementBanking
 {
 
     function calcInterestEpr($datas) {
-        
-        $amount = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($datas["diffDate"])) / 360 , 2) ;
+       
+        $amount = round((\intval($datas['amount']) * (\floatval($datas['rate'])/100) * \intval($datas["nbDay"])) / 360 , 2) ;
 
         return $amount ;
+
     }
 
     function calcInterestDat($datas) {
