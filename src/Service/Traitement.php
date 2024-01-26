@@ -19,21 +19,23 @@ Class Traitement
                 
             case 'DAT':
                 # code...
-                $amount = [] ;
+                $values = [] ;
 
-                $amount["interest"] = $this->TraitementDat($datas) ;
+                $values["interest"] = $this->TraitementDat($datas) ;
 
-                $amount["totality"]    = $amount["interest"]['amount'] + $datas["amount"] ;
+                $values["totality"]    = $values["interest"]['amount'] + $datas["amount"] ;
 
-                return $amount ;
+                return $values ;
 
                 break;
 
             case 'EPR':
                 # code...
-                $amountInterest = $this->TraitementEpr($datas) ; 
+                $values         = [] ;
+
+                $values["amountInterest"] = $this->TraitementEpr($datas) ; 
                 
-                break;
+                return $values ;
             
             default:
                 # code...
@@ -65,12 +67,14 @@ Class Traitement
 
             case 'Mensuel':
                 # code...
-                $this->TraitementEprMonth($datas , $monthYersDate) ;
+                return $this->TraitementEprMonth($datas , $monthYersDate) ;
+
                 break;
 
             case 'Annuel':
                 # code...
-                $this->TraitementEprYears($datas , $monthYersDate) ;
+                return $this->TraitementEprYears($datas , $monthYersDate) ;
+
                 break;
             
             default:
@@ -89,8 +93,8 @@ Class Traitement
     }
 
     function TraitementEprYears($datas , $listMonthYears) {
-        $amount[] = [] ;
-        $amount["years"] = 0 ;
+        $values[] = [] ;
+        $amountYears = 0 ;
 
         $diffDate = $this->traitementDate->DayTwoDate($datas["datedepot"] , $datas["datefin"]) ;
 
@@ -101,13 +105,20 @@ Class Traitement
 
             $monthYears = $listMonthYears[$i]['listMonthYears'] ;
 
-            $amount[$i][ $monthYears] = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($listMonthYears[$i]["nombreJours"]) )/360 , 2) ;
+            $values[$i]["amount"]    = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($listMonthYears[$i]["nombreJours"]) )/360 , 2) ;
+            $values[$i]["date"]      = $monthYears ;
+            $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
             
-            $amount["years"] += $amount[$i][ $monthYears] ;
+            $amountYears += $values[$i]["amount"] ;
 
         }
         
-        return $amount ; 
+        $values[0]['amountYears'] = $amountYears ;
+        $values[0]['diffDate']    = $diffDate ;
+        $values[0]['capital']     = $amountYears + $datas['amount'] ;
+
+        return $values ; 
+        
     }
 
 }

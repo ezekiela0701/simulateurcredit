@@ -41,14 +41,20 @@ Class TraitementDate
         $date1 = new DateTime($date1);
         $date2 = new DateTime($date2);
         
-
         // Itération sur chaque mois
         while ($date1 <= $date2) {
             $array[$i]["listMonthYears"]   = $date1->format('M Y');  // 'F' pour le nom du mois et 'Y' pour l'année
 
             $nombreJours               = $date1->format('t');         // 't' retourne le nombre de jours dans le mois
+            
+            
+            if ($date1->format('j') > 1) {
+                // Si la date de début n'est pas le premier jour du mois, ajuster le nombre de jours
+                $nombreJours -= $date1->format('j') - 1;
+            }
+            
             $array[$i]['nombreJours']      = $nombreJours ;
-    
+
             $date1->modify('first day of next month');
 
             $i++ ;

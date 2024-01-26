@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Form\SimulatorType;
 use App\Service\Traitement;
+use App\Service\TraitementDate;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Traitement $traitement , Request $request): Response
+    public function index(Traitement $traitement , TraitementDate $traitementDate , Request $request): Response
     {
         
         $form = $this->createForm(SimulatorType::class) ;
@@ -29,6 +30,8 @@ class IndexController extends AbstractController
             $datas = $form->getData() ;
 
             $simulate = $traitement->TraitementSimulator($datas) ; 
+
+            $datas["nbrJours"] = $traitementDate->DayTwoDate($datas["datedepot"] , $datas["datefin"]) ; 
             
         }
 
