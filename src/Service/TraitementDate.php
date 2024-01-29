@@ -7,6 +7,15 @@ use DateTime;
 Class TraitementDate
 {
 
+    function getDayOnDate($date1) {
+        // Create a DateTime object
+        $date = new DateTime($date1);
+
+        $day = $date->format('d');
+
+        return $day ;
+
+    }
     function nbMonthBetweenTwoDate($date1, $date2) {
         // Convertir les chaînes de date en objets DateTime
         $datetime1 = new DateTime($date1);
@@ -69,5 +78,28 @@ Class TraitementDate
     
         return $array ;
     }
+
+    function getDate15NbDay($date) {
+
+        // Créer un objet DateTime à partir de la date fournie
+        $dateObj = new DateTime($date);
+    
+        // Récupérer le mois et l'année de la date fournie
+        $mois = $dateObj->format('m');
+        $annee = $dateObj->format('Y');
+    
+        // Créer une nouvelle date au 15 du même mois
+        $dateDu15 = new DateTime("$annee-$mois-15");
+    
+        // Obtenir le nombre de jours dans le mois de la date fournie
+        $nombreJours = $dateDu15->format('t');
+    
+        return [
+            'dateDu15' => $dateDu15,
+            'nombreJours' => $nombreJours,
+        ];
+
+    }
+    
 
 } 

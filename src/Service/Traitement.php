@@ -52,7 +52,6 @@ Class Traitement
 
         $datas["nbMonth"]   = $this->traitementDate->nbMonthBetweenTwoDate($datas["datedepot"] , $datas["datefin"]) ;
         
-        // $amount = (\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($diffDate)) / 360 ;
         $values['nbMonth']  = $datas["nbMonth"] ;
         $values['amount']   = $this->traitementBanking->calcInterestDat($datas) ;
 
@@ -97,14 +96,32 @@ Class Traitement
         for ($i=0; $i < \count($listMonthYears); $i++) { 
 
             $monthYears = $listMonthYears[$i]['listMonthYears'] ;
+            
+            
+            if ($i == 0) {
+                # code...
+                $day = intval($this->traitementDate->getDayOnDate($datas['datedepot'])) ; 
+                if ( $day < 16) {
+                    # code...
+                    $datas["nbDay"]         = 15 ; 
+                    $values[$i]["nbDay"]     = 15 ;
+                }else {
+                    # code...
+                    $datas["nbDay"]         = 0 ; 
+                    $values[$i]["nbDay"]     = 0 ;
+                }
+            }
 
-            $datas["nbDay"]         = $listMonthYears[$i]["nombreJours"] ; ;
+            else {
+                # code...
+                $datas["nbDay"]         = $listMonthYears[$i]["nombreJours"] ; 
+                $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
+            }
 
             $values[$i]["amount"]    = $this->traitementBanking->calcInterestEpr($datas) ;
 
             /** listes des moi et nombre de jours dans chaque mois*/
             $values[$i]["date"]      = $monthYears ;
-            $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
 
             $values[$i]["capital"]   = $values[$i]["amount"] + $datas["amount"] ; 
 
@@ -137,12 +154,29 @@ Class Traitement
             # code...
 
             $monthYears         = $listMonthYears[$i]['listMonthYears'] ;
-            $datas['nbDay']     = $listMonthYears[$i]["nombreJours"] ;
+             
+            if ($i == 0) {
+                # code...
+                $day = intval($this->traitementDate->getDayOnDate($datas['datedepot'])) ; 
+                if ( $day < 16) {
+                    # code...
+                    $datas["nbDay"]         = 15 ; 
+                    $values[$i]["nbDay"]     = 15 ;
+                }else {
+                    # code...
+                    $datas["nbDay"]         = 0 ; 
+                    $values[$i]["nbDay"]     = 0 ;
+                }
+            }
 
-            // $values[$i]["amount"]    = round((\intval($datas['amount']) * (\intval($datas['rate'])/100) * \intval($listMonthYears[$i]["nombreJours"]) )/360 , 2) ;
+            else {
+                # code...
+                $datas["nbDay"]         = $listMonthYears[$i]["nombreJours"] ; 
+                $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
+            }
+
             $values[$i]["amount"]    = $this->traitementBanking->calcInterestEpr($datas) ;
             $values[$i]["date"]      = $monthYears ;
-            $values[$i]["nbDay"]     = $listMonthYears[$i]["nombreJours"] ;
             
             $amountYears += $values[$i]["amount"] ;
 

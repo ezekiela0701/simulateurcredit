@@ -26,7 +26,7 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header border-bottom">
-                                            <h4 class="card-title">Simulation produit {{datas.product}} {{datas.nbrJours}} jours pour un montant de {{datas.amount|number_format(2, '.', ' ')}} </h4>
+                                            <h4 class="card-title">Simulation produit {{datas.product}} entre {{datas.datedepot}} et {{datas.datefin}}  pour un montant de {{datas.amount|number_format(2, '.', ' ')}} </h4>
                                         </div>
                                         <div class="card-datatable">
                                             <table id="listChange" class=" table table-bordered">
@@ -88,9 +88,9 @@
                                                         <tr>
 
                                                             <td>Total</td>
-                                                            <td>{{simulates["amountInterest"][0].diffDate}} j</td>
-                                                            <td>{{datas.rate}} %</td>
-                                                            <td>{{simulates["amountInterest"][0].amountYears|number_format(2, '.', ' ')}}   Ar</td>
+                                                            {# <td>{{simulates["amountInterest"][0].diffDate}} j</td>
+                                                            <td>{{datas.rate}} %</td> #}
+                                                            <td style="text-align: right;" colspan="3" >{{simulates["amountInterest"][0].amountYears|number_format(2, '.', ' ')}}   Ar</td>
                                                             <td>{{simulates["amountInterest"][0].capital|number_format(2, '.', ' ')}}   Ar</td>
                                                             
                                                         </tr>
@@ -101,8 +101,8 @@
                                                                 <th>Mois</th>
                                                                 <th>Nb jour</th>
                                                                 <th>Taux</th>
-                                                                <th>Interet</th>
                                                                 <th>Capital</th>
+                                                                <th>Interet</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -110,16 +110,13 @@
                                                         {% for values in simulates %}
                                                            
                                                             {% for value in values %}
-                                                                {# <pre>
-                                                                    {{ dump(value) }}
-                                                                </pre> #}
                                                                 <tr>
 
                                                                     <td>{{value.date}}</td>
                                                                     <td>{{value.nbDay}}</td>
                                                                     <td>{{datas.rate}} %</td>
-                                                                    <td>{{value.amount|number_format(2, '.', ' ')}} </td>
                                                                     <td>{{value.capital|number_format(2, '.', ' ')}} </td>
+                                                                    <td>{{value.amount|number_format(2, '.', ' ')}} </td>
                                                                     
                                                                 </tr>
 
@@ -130,10 +127,10 @@
                                                         <tr>
 
                                                             <td>Total</td>
-                                                            <td>{{simulates["amountInterest"][0].diffDate}} j</td>
-                                                            <td>{{datas.rate}} %</td>
+                                                            {# <td>{{simulates["amountInterest"][0].diffDate}} j</td>
+                                                            <td>{{datas.rate}} %</td> #}
+                                                            <td style="text-align: right;" colspan="3" ><span >{{simulates["amountInterest"][0].capitalYears|number_format(2, '.', ' ')}}   Ar</span></td>
                                                             <td>{{simulates["amountInterest"][0].amountInterestYears|number_format(2, '.', ' ')}}   Ar</td>
-                                                            <td>{{simulates["amountInterest"][0].capitalYears|number_format(2, '.', ' ')}}   Ar</td>
                                                             
                                                         </tr>
                                                         
